@@ -1,0 +1,55 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+sourceCompatibility = "11"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework:spring-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'javax.xml:jaxb-api:2.1'
+
+    implementation 'com.bullhorn:sdk-rest:1.4.36'
+    implementation 'org.apache.pdfbox:pdfbox:3.0.0-RC1'
+    implementation group: 'com.opencsv', name: 'opencsv', version: '5.4'
+    implementation 'org.apache.poi:poi:5.0.0'
+    implementation 'org.apache.poi:poi-ooxml:5.0.0'
+    implementation 'org.apache.logging.log4j:log4j:2.17.2'
+    implementation 'org.quartz-scheduler:quartz:2.3.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    archiveFileName = 'NHProcessor.jar'
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes(
+                "Main-Class": "com.sps.main.NewHireProcessor",
+                'Class-Path': configurations.runtimeClasspath.files.collect { "lib/$it.name" }.join(' '),
+                'Implementation-Version': project.version
+        )
+    }
+
+    from(configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }) {}
+
+}
+targetCompatibility = JavaVersion.VERSION_11
