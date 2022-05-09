@@ -1,20 +1,23 @@
 package com.sps.util;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class Units {
+	public static DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.ENGLISH);
 
 	public static String today( ) {
-		return DateTimeFormatter.ofPattern("MM/dd/yy", Locale.ENGLISH).format(LocalDateTime.now());
+		return dateFormat.format(LocalDateTime.now());
 	}
 
 	public static String today(char separator) {
-		return DateTimeFormatter.ofPattern("MM" + separator + "dd" + separator + "yy", Locale.ENGLISH).format(LocalDateTime.now());
+		return DateTimeFormatter.ofPattern("MM" + separator + "dd" + separator + "yyyy", Locale.ENGLISH).format(LocalDateTime.now());
 	}
 	
 	public static String yesterday( ) {
@@ -22,10 +25,11 @@ public class Units {
 	}
 	
 	public static String todayMinus(int days) {
-		return DateTimeFormatter.ofPattern("MM/dd/yy", Locale.ENGLISH).format(LocalDateTime.now().minusDays(days));
+		return dateFormat.format(LocalDateTime.now().minusDays(days));
 	}
 
 	public static String formatDate(DateTime date) {
-		return date != null ? date.toString(DateTimeFormat.shortDate()) : "";
+		DateTime dt = date.withZone(DateTimeZone.UTC);
+		return date != null ? LocalDate.of(dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth()).toString() : "";
 	}
 }

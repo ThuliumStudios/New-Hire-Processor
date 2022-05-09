@@ -45,7 +45,8 @@ public class BullhornTask implements Job {
 
         Set<String> placementFields = fieldSet("candidate", "jobOrder", "dateBegin", "id", "payRate");
         Set<String> candidateFields = fieldSet("id", "name", "ssn", "firstName", "lastName", "middleName",
-                "dateOfBirth", "gender", "ethnicity", "address", "email", "federalFilingStatus");
+                "dateOfBirth", "gender", "ethnicity", "address", "email", "federalFilingStatus", "customText5",
+                "customText6");
 
         // Copy the employee import templates to the Finance folder for editing
         System.out.println("Copying file");
