@@ -61,7 +61,8 @@ public class NewHireProcessor {
         String day = new SimpleDateFormat("E").format(Calendar.getInstance().getTime());
         dt.dayOfWeek();
 
-        String expr = "0 " + min + " " + hr + " ? * MON *";
+        // String expr = "0 " + min + " " + hr + " ? * MON *";
+        String expr = "0 " + min + " " + hr + " ? * " + day + " *";
 
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity("testTrigger", "group1")
